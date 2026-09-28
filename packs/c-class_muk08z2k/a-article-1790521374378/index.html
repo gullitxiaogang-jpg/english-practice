@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="color-scheme" content="light"/>
+<meta name="robots" content="noindex"/>
+<title>课后训练 · Lesson 2 Breakfast or lunch? 早餐还是午餐？</title>
+<style>:root{--bg:#f3f6f4;--card:#fff;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--accent:#0f766e;--accent2:#0369a1;--ok:#15803d;--bad:#b91c1c;--chip:#ecfdf5}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:linear-gradient(180deg,#eef5f0,#f7f3ea);color:var(--ink);line-height:1.65}
+header{background:linear-gradient(90deg,#0f766e,#0e7490);color:#fff;padding:18px 20px 16px;box-shadow:0 2px 12px rgba(15,118,110,.25)}
+header h1{margin:0;font-size:1.35rem}
+header .sub{opacity:.9;font-size:.82rem;margin-top:4px}
+nav{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;background:rgba(255,255,255,.72);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+nav button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font-size:.78rem;cursor:pointer;color:var(--ink)}
+nav button.active{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+main{max-width:960px;margin:0 auto;padding:16px 14px calc(80px + env(safe-area-inset-bottom,0px))}
+.panel{display:none;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 4px 20px rgba(15,23,42,.05)}
+.panel.active{display:block}
+h2{margin:0 0 10px;font-size:1.15rem}
+h3{margin:16px 0 8px;font-size:1rem;color:var(--accent)}
+.muted{color:var(--muted);font-size:.86rem}
+.passage{white-space:pre-wrap;text-align:justify;font-size:1.05rem;background:#f8faf9;border-radius:12px;padding:14px;border:1px solid #e5eee8}
+.passage.cn{margin-top:12px;color:#475569;font-size:.95rem}
+.btn{display:inline-flex;align-items:center;gap:6px;border:none;border-radius:10px;padding:8px 14px;font-weight:700;cursor:pointer;font-size:.85rem}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-ghost{background:#f1f5f9;color:#334155}
+.btn-ok{background:#16a34a;color:#fff}
+.btn-bad{background:#e11d48;color:#fff}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.card{border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0;background:#fbfdfe}
+.q{font-weight:700;margin-bottom:8px}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer}
+.opt:hover{border-color:#99f6e4}
+.opt.correct{border-color:#16a34a;background:#f0fdf4}
+.opt.wrong{border-color:#e11d48;background:#fff1f2}
+.blank{display:inline-block;min-width:3.2em;border-bottom:2px solid var(--accent2);margin:0 2px;padding:0 4px;text-align:center;font-weight:700;color:var(--accent2)}
+.blank.ok{border-color:#16a34a;color:#15803d}
+.blank.bad{border-color:#e11d48;color:#b91c1c}
+textarea{width:100%;min-height:120px;border-radius:10px;border:1px solid var(--line);padding:10px;font:inherit;resize:vertical}
+.block{display:inline-flex;margin:4px;padding:8px 10px;border-radius:10px;background:#e0f2fe;border:1px solid #bae6fd;cursor:grab;user-select:none;font-weight:600}
+.block.chunk{background:#fef3c7;border-color:#fcd34d}
+.block.used{opacity:.35;pointer-events:none}
+.slot-area{min-height:52px;border:2px dashed #cbd5e1;border-radius:12px;padding:8px;margin:8px 0;background:#f8fafc}
+.hl{background:#fde68a;border-radius:3px;padding:0 2px}
+.tree .node{border-radius:12px;padding:10px 12px;margin:6px 0;border:1px solid var(--line)}
+.tree .center{background:linear-gradient(135deg,#0f766e,#0e7490);color:#fff;font-weight:700}
+.tree .branch{background:#ecfdf5;border-color:#a7f3d0}
+.tree .detail{background:#fff7ed;border-color:#fed7aa;font-size:.92rem}
+.progress{font-size:.8rem;color:var(--muted);margin-bottom:8px}
+.footer-brand{position:fixed;left:0;right:0;bottom:0;background:#3b82c4;color:rgba(255,255,255,.9);font-size:.68rem;padding:6px 14px calc(6px + env(safe-area-inset-bottom,0px));text-align:right;z-index:30}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:48px;background:#0f172a;color:#fff;padding:8px 14px;border-radius:999px;font-size:.8rem;display:none;z-index:40}
+.speak{font-size:.75rem;margin-left:6px}
+.tools{display:flex;flex-wrap:wrap;gap:8px;padding:8px 16px 0;max-width:960px;margin:0 auto}
+.gate{position:fixed;inset:0;z-index:100;background:linear-gradient(160deg,#0f766e,#0e7490 45%,#eef5f0);display:flex;align-items:center;justify-content:center;padding:20px}
+.gate-card{background:#fff;border-radius:18px;padding:22px 20px;width:min(400px,100%);box-shadow:0 16px 40px rgba(15,23,42,.2)}
+.gate-card h2{margin:0 0 6px;font-size:1.2rem}
+.gate-card .hint{color:#64748b;font-size:.82rem;margin-bottom:14px;line-height:1.5}
+.gate-card label{display:block;font-size:.78rem;font-weight:700;color:#475569;margin:10px 0 4px}
+.gate-card input{width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:10px 12px;font:inherit}
+.gate-card .err{color:#b91c1c;font-size:.78rem;margin-top:8px;min-height:1.2em}
+.gate-card .go{width:100%;margin-top:14px;padding:11px;border:none;border-radius:12px;background:#0f766e;color:#fff;font-weight:800;cursor:pointer;font-size:.95rem}
+@media print{
+  header,.tools,nav,.footer-brand,.toast,.btn{display:none!important}
+  body{background:#fff}
+  main{padding:0;max-width:none}
+  .panel{display:block!important;box-shadow:none;border:none;padding:0;page-break-inside:avoid}
+}</style>
+</head>
+<body>
+<header>
+  <h1>🏠 课后英语训练</h1>
+  <div class="sub" id="meta-sub">加载中…</div>
+</header>
+<div class="tools">
+  <button type="button" class="btn btn-ghost" id="btn-clear-draft">清除本机草稿</button>
+  <button type="button" class="btn btn-ghost" id="btn-print">打印当前页</button>
+</div>
+<nav id="nav" aria-label="训练模块"></nav>
+<main id="main"></main>
+<div class="toast" id="toast"></div>
+<footer class="footer-brand">「徐老师栩栩多多英文课后训练系统2」 ☁ · 课后练习</footer>
+<script>window.__OFFLINE_PACK__={"meta":{"brand":"徐老师栩栩多多英文课后训练系统2","packId":"p_2idexf","articleTitle":"Lesson 2 Breakfast or lunch? 早餐还是午餐？","exportedAt":"2026-09-28T03:43:19.873Z","note":"课后练习页，可反复训练，无需联网。","studentFacing":true},"modules":{"passage":{"title":"Lesson 2 Breakfast or lunch? 早餐还是午餐？","englishText":"It was Sunday. I never get up early on Sundays. I sometimes stay in bed until lunchtime. Last Sunday I got up very late. I looked out of the window. It was dark outside. 'What a day!' I thought. 'It's raining again.'\n\nJust then, the telephone rang. It was my aunt Lucy. 'I've just arrived by train,' she said. 'I'm coming to see you.'\n\n'But I'm still having breakfast,' I said.\n\n'What are you doing?' she asked.\n\n'I'm having breakfast,' I repeated.\n\n'Dear me,' she said. 'Do you always get up so late? It's one o'clock!'","chineseText":"那是个星期天。星期天我从不早起。有时候我会一直躺到午饭时间。上个星期天我起得很晚。我朝窗外望去，外面天色阴沉。“真倒霉！” 我心想，“又下雨了。”\n\n就在这时，电话响了。是我的露西姨妈打来的。“我刚坐火车到，” 她说，“我马上来看你。”\n\n“可我还在吃早饭呢。” 我说。\n\n“你在干什么？” 她问道。\n\n“我正在吃早饭。” 我又说了一遍。\n\n“天哪，” 她说，“你总是起得这么晚吗？都一点钟了！”","highlights":[]},"grammarLogic":{"title":"Lesson 2 Breakfast or lunch? 早餐还是午餐？","grammarPoints":[{"id":"gp1","title":"一般现在时 (频度副词)","level":"simple","brief":"用于描述习惯或经常性动作，频度副词通常置于实义动词之前。","formulaLines":["主语 + 频度副词 (never/sometimes/always) + 动词原形/三单","主语 + be动词 + 频度副词"],"needles":["never get up","sometimes stay","always get up"]},{"id":"gp2","title":"一般过去时","level":"simple","brief":"用于描述过去某个特定时间发生的动作或状态。","formulaLines":["主语 + 动词过去式 (did/was/were)"],"needles":["was Sunday","got up","looked","thought","rang"]},{"id":"gp3","title":"现在进行时","level":"simple","brief":"用于描述说话瞬间正在发生的动作。","formulaLines":["主语 + am/is/are + 动词-ing"],"needles":["It's raining","I'm coming","I'm still having","What are you doing"]},{"id":"gp4","title":"现在完成时","level":"complex","brief":"用于描述刚刚完成的动作对现在产生的影响。","formulaLines":["主语 + have/has + 过去分词 (done)"],"needles":["I've just arrived"]},{"id":"gp5","title":"感叹句 (What)","level":"simple","brief":"用 What 引导的感叹句，用于表达强烈的情感。","formulaLines":["What + (a/an) + 形容词 + 名词 (+ 主语 + 谓语)!"],"needles":["What a day!"]}],"selectedPointIds":["gp1","gp2"],"focusTitle":"一般现在时 (频度副词) · 一般过去时","focusLevel":"simple","cefr":"A2","theme":"人物故事 People stories","hotEn":"I usually wake up at 7 a.m., but last Sunday was different. I never get up early on weekends, so I sometimes stay in bed until noon. Last Sunday, I got up at 11 a.m. and looked out of the window. It was rainy and cold. Just then, the phone rang. It was my Aunt Lucy. She arrived by train and wanted to visit me. 'I am still having breakfast,' I told her. She was surprised and asked, 'Do you always get up so late? It is already one o'clock!' I felt a bit embarrassed, but I quickly got dressed to meet her.","hotCn":"我通常在早上7点起床，但上周日不同。我周末从不早起，所以有时会赖床到中午。上周日，我上午11点才起床，看向窗外。外面阴雨绵绵，天气寒冷。就在这时，电话响了。是我露西姑姑。她乘火车到达了，想来看我。“我还在吃早餐呢，”我对她说。她很惊讶地问：“你总是起得这么晚吗？已经一点钟了！”我感到有点尴尬，但很快穿好衣服去接她。","hotSpansEn":[{"start":10,"end":17,"pairId":"p-1790565658348","color":0,"label":"wake up"},{"start":33,"end":44,"pairId":"p-1790565668114","color":1,"label":"last Sunday"}],"hotSpansCn":[{"start":8,"end":10,"manual":true,"color":0,"pairId":"cn-1790565663254"},{"start":12,"end":14,"manual":true,"color":1,"pairId":"cn-1790565672392"}],"examples":[{"id":"ex1","en":"I always drink milk for breakfast.","cn":"我总是早餐喝牛奶。","spansEn":[{"start":9,"end":14,"pairId":"p-1790565693138","color":0,"label":"drink"}],"spansCn":[{"start":2,"end":4,"pairId":"p-1790565693138","color":0}]},{"id":"ex2","en":"He visited the museum last year.","cn":"他去年参观了博物馆。","spansEn":[],"spansCn":[]},{"id":"ex3","en":"They are never late for school.","cn":"他们上学从不迟到。","spansEn":[],"spansCn":[]}],"guideSteps":[{"id":"g1","question":"🔍 观察文中 'usually', 'never', 'sometimes' 出现的位置，它们在动词之前还是之后？","hint":"对比 'I usually wake up' 和 'I never get up'。","sampleAnswer":"它们都出现在实义动词（如wake up, get up）之前。"},{"id":"g2","question":"🕰️ 文中描述 'last Sunday' 的动作（如 got up, looked, rang）使用了什么形式？","hint":"观察动词的词尾变化。","sampleAnswer":"使用了动词的过去式。"},{"id":"g3","question":"⚖️ 比较 'I usually wake up' 和 'I got up at 11 a.m.'，这两句分别在表达什么？","hint":"一个是习惯，一个是具体的过去事件。","sampleAnswer":"前者表达日常习惯（一般现在时），后者表达过去某个特定时间的动作（一般过去时）。"},{"id":"g4","question":"💡 如果要把 'I always get up late' 改成过去时，应该怎么改？","hint":"将 get 的形式改变。","sampleAnswer":"I always got up late."}],"guideQuestions":["🔍 观察文中 'usually', 'never', 'sometimes' 出现的位置，它们在动词之前还是之后？","🕰️ 文中描述 'last Sunday' 的动作（如 got up, looked, rang）使用了什么形式？","⚖️ 比较 'I usually wake up' 和 'I got up at 11 a.m.'，这两句分别在表达什么？","💡 如果要把 'I always get up late' 改成过去时，应该怎么改？"],"ruleCn":"1. 一般现在时用于描述习惯或客观事实。频度副词（always, usually, often, sometimes, never）置于实义动词前，be动词后。\n2. 一般过去时用于描述过去某个特定时间发生的动作。动词需变为过去式（规则动词加-ed，不规则动词需记忆）。","conceptCn":"一般现在时（频度副词）与一般过去时的时态区分与用法。","formulaLines":["主语 + 频度副词 + 动词原形/三单 (习惯)","主语 + be动词 + 频度副词 (状态)","主语 + 动词过去式 (过去特定动作/状态)"],"formula":"主语 + 频度副词 + 动词原形/三单 (习惯)\n主语 + be动词 + 频度副词 (状态)\n主语 + 动词过去式 (过去特定动作/状态)","quiz":[{"id":"q1","kind":"mcq","stem":"I ______ get up early on Sundays, so I usually stay in bed until lunchtime.","options":["A. always","B. never","C. sometimes","D. often"],"answer":"B","analysis":"根据课文内容 'I never get up early on Sundays' 以及后文 'stay in bed until lunchtime' 可知，作者在周日从不早起，故选 B。","difficulty":"zhongkao"},{"id":"q2","kind":"mcq","stem":"Last Sunday, the writer ______ out of the window and saw that it was dark outside.","options":["A. look","B. looks","C. looked","D. is looking"],"answer":"C","analysis":"句首有时间状语 'Last Sunday'，表示过去发生的动作，动词应使用一般过去时，look 的过去式为 looked。","difficulty":"zhongkao"},{"id":"q3","kind":"fill","stem":"The telephone ______ (ring) just then, and it was Aunt Lucy.","options":[],"answer":"rang","analysis":"上下文描述的是过去某个周日的经历，且 'just then' 表示当时，需使用一般过去时，ring 的不规则过去式为 rang。","difficulty":"zhongkao"},{"id":"q4","kind":"rewrite","stem":"I sometimes stay in bed until lunchtime. (用 always 改写，使句意相反)","options":[],"answer":"I am always out of bed before lunchtime. / I don't always stay in bed until lunchtime.","analysis":"本题考查频度副词的运用。原句为 '有时在床上待到午餐时间'，若用 always 改写且意思相反，可表达为 '总是早早起床' 或 '并非总是待到午餐时间'。最贴合语境的改写为否定形式或反义表达。","difficulty":"zhongkao"}],"quizDifficulty":"zhongkao","quizCounts":{"mcq":2,"fill":1,"rewrite":1}},"continuationWriting":{"title":"The Sunday Surprise","adaptedPassage":"It was Sunday, a day I usually reserved for endless slumber. I often stayed in bed until lunchtime, treating the morning as a distant memory. Last Sunday was no exception; I woke up feeling groggy and disoriented. Glancing out of the window, I saw a world draped in darkness. 'What a day!' I sighed, convinced that a heavy rainstorm had swallowed the morning sun.\n\nJust as I was shuffling toward the kitchen, the telephone rang. It was my Aunt Lucy, known for her punctuality and strict habits. 'I've just arrived by train,' she announced briskly. 'I'm coming to see you right now.'\n\n'But I'm still having breakfast,' I replied, yawning. \n\n'What are you doing?' she asked, her voice laced with confusion.\n\n'I'm having breakfast,' I repeated, pouring myself a bowl of cereal.\n\n'Dear me!' she exclaimed. 'Do you always get up so late? It's one o'clock in the afternoon!' \n\nI froze, the spoon halfway to my mouth. I looked at the dark sky again, then at the clock on the wall. Suddenly, I realized that the darkness outside wasn't caused by rain, but by a massive power outage that had shut down the streetlights and dimmed the city, and I had completely slept through my alarm. At that moment, a loud knock sounded at the door.","para1Opening":"Panic surged through me as I rushed to the door to welcome Aunt Lucy.","para2Opening":"As we sat down for a late lunch, the lights suddenly flickered back on.","summary":"讲述一个习惯晚起的少年在周日睡过头，误以为外面阴暗是下雨，结果被露西姨妈（Aunt Lucy）告知已是一点钟。故事在姨妈敲门时截断，核心冲突在于少年的懒散与姨妈的准时之间的对比（Contrast between laziness and punctuality）。","characters":["The Narrator (Lazy, disoriented)","Aunt Lucy (Punctual, strict)"],"conflict":"The narrator's chaotic schedule vs. Aunt Lucy's disciplined lifestyle.","foreshadowing":["The darkness outside (not rain, but power outage/late wake-up)","The narrator's habit of staying in bed until lunchtime"],"theme":"Self-discipline and the humor of misunderstandings.","continuationRequirements":["Ensure the interaction between the narrator and Aunt Lucy is vivid.","Resolve the 'darkness' mystery (power outage/weather).","Show a change in the narrator's mood or a humorous conclusion."],"steps":[{"id":"s1","title":"第1步·读懂原文","teacherGuide":"引导学生分析人物性格及环境线索，特别是'darkness'的真正含义。","studentTask":"分析文中 narrator 的心理状态及 Aunt Lucy 的语气。","scaffolds":["Character traits: lazy vs. punctual","Key detail: 1 o'clock"],"sampleSentences":["The narrator is completely oblivious to the actual time."],"tips":["注意文中 'Dear me' 表达的惊讶情绪。"]},{"id":"s2","title":"第2步·预判情节","teacherGuide":"引导学生思考敲门后会发生什么，以及如何化解尴尬。","studentTask":"用三个关键词预判第一段和第二段的走向。","scaffolds":["Embarrassment $\rightarrow$ Explanation $\rightarrow$ Reconciliation"],"sampleSentences":["I predict the narrator will feel ashamed and try to apologize."],"tips":["情节要符合人物设定，不要突然让主角变得勤快。"]},{"id":"s3","title":"第3步·构思细节","teacherGuide":"指导学生通过动作和神态描写（Show, don't tell）来增强画面感。","studentTask":"设计 3 个描写‘尴尬’或‘匆忙’的动作细节。","scaffolds":["Facial expressions: blushing, wide-eyed","Actions: scrambling, stuttering"],"sampleSentences":["My face turned beet red as I stammered an apology."],"tips":["避免重复使用 'I felt embarrassed'，尝试用动作代替。"]},{"id":"s4","title":"第4步·句子脚手架","teacherGuide":"提供高级句式，提升续写语言档次。","studentTask":"利用给出的句式改写简单的句子。","scaffolds":["Not only... but also...","Hardly had I... when...","To my surprise..."],"sampleSentences":["Hardly had I opened the door when Aunt Lucy's critical gaze swept over my messy appearance."],"tips":["尝试使用倒装句或非谓语动词短语。"]},{"id":"s5","title":"第5步·完整写作批改","teacherGuide":"根据评分标准进行互评，重点检查逻辑连贯性和词汇丰富度。","studentTask":"完成全文续写并根据 Rubric 进行同伴互评。","scaffolds":["Checklist: Logic, Vocabulary, Grammar, Plot resolution"],"sampleSentences":["N/A"],"tips":["检查时态是否统一（一般过去时）。"]}],"modelEssayPara1":"Panic surged through me as I rushed to the door to welcome Aunt Lucy. Opening it with trembling hands, I found her standing there, arms crossed, looking at me with a mixture of amusement and disapproval. I stood there in my pajamas, hair disheveled, looking every bit the sleepyhead she suspected me to be. 'Good... morning, Aunt Lucy?' I stammered, my face flushing a deep crimson. She let out a hearty laugh, stepping inside and shaking her head. 'My dear, it's practically tea time! I thought you had been kidnapped by your pillow,' she joked, though her eyes remained sharp.","modelEssayPara2":"As we sat down for a late lunch, the lights suddenly flickered back on, illuminating the room and revealing the bright afternoon sun outside. The power outage had finally ended, and with it, my excuse for the darkness. We spent the afternoon chatting, though Aunt Lucy didn't miss a chance to lecture me on the virtues of a disciplined routine. By the time she left, I had promised to set three different alarms for the following Sunday. As I watched her leave, I realized that while sleeping in was blissful, the shock of a one-o'clock breakfast was a wake-up call I wouldn't soon forget.","scoringRubric":["Content (10分): 情节连贯，逻辑合理，成功解决'黑暗'伏笔，人物性格一致。","Language (10分): 词汇丰富（如 disheveled, crimson），句式多样（含倒装或复杂句），语法正确。","Organization (5分): 段落衔接自然，段首句引导恰当，有明确的开头、发展和结尾。"]},"sentenceBuild":{"title":"Lesson 2 Breakfast or lunch? 句子积木拼搭训练","teacherGuide":"本节课重点训练一般现在时（习惯）与一般过去时（叙事）的区分，以及现在进行时的用法。请引导学生观察状语（如Last Sunday）如何决定谓语动词的时态，并练习‘have breakfast’等固定搭配的块状记忆。","tips":["注意时间状语对时态的影响","注意‘get up’、‘stay in bed’等短语的整体性","区分‘I have breakfast’(习惯)与‘I am having breakfast’(正在进行)"],"sampleSentences":["I usually get up at six.","Last night I watched a movie.","I am reading a book now."],"sentences":[{"id":"sent-1","order":1,"correctSentence":"I never get up early on Sundays.","cnHint":"我星期天从不早起。","blocks":[{"id":"b1","text":"I","isChunk":false,"posLabel":"代词","roleLabel":"主语","note":"","colorHint":"subject"},{"id":"b2","text":"never","isChunk":false,"posLabel":"副词","roleLabel":"状语","note":"频度副词","colorHint":"other"},{"id":"b3","text":"get up","isChunk":true,"posLabel":"动词短语","roleLabel":"谓语","note":"一般现在时","colorHint":"verb"},{"id":"b4","text":"early","isChunk":false,"posLabel":"副词","roleLabel":"状语","note":"","colorHint":"other"},{"id":"b5","text":"on Sundays","isChunk":true,"posLabel":"介词短语","roleLabel":"状语","note":"表示习惯","colorHint":"chunk"}],"structureSample":"I always go to school on weekdays.","structureSampleCn":"主语 + 频度副词 + 谓语 + 时间状语","tips":["注意on Sundays中的s表示每个星期天"]},{"id":"sent-2","order":2,"correctSentence":"I sometimes stay in bed until lunchtime.","cnHint":"有时候我会一直躺到午饭时间。","blocks":[{"id":"b1","text":"I","isChunk":false,"posLabel":"代词","roleLabel":"主语","note":"","colorHint":"subject"},{"id":"b2","text":"sometimes","isChunk":false,"posLabel":"副词","roleLabel":"状语","note":"","colorHint":"other"},{"id":"b3","text":"stay in bed","isChunk":true,"posLabel":"动词短语","roleLabel":"谓语","note":"","colorHint":"verb"},{"id":"b4","text":"until lunchtime","isChunk":true,"posLabel":"介词短语","roleLabel":"状语","note":"直到...","colorHint":"chunk"}],"structureSample":"He often reads books until midnight.","structureSampleCn":"主语 + 频度副词 + 谓语 + 时间范围状语","tips":["stay in bed 是固定表达，意为‘赖床/卧床’"]},{"id":"sent-3","order":3,"correctSentence":"Last Sunday I got up very late.","cnHint":"上个星期天我起得很晚。","blocks":[{"id":"b1","text":"Last Sunday","isChunk":true,"posLabel":"名词短语","roleLabel":"状语","note":"","colorHint":"chunk"},{"id":"b2","text":"I","isChunk":false,"posLabel":"代词","roleLabel":"主语","note":"","colorHint":"subject"},{"id":"b3","text":"got up","isChunk":true,"posLabel":"动词短语","roleLabel":"谓语","note":"一般过去时","colorHint":"verb"},{"id":"b4","text":"very late","isChunk":true,"posLabel":"副词短语","roleLabel":"状语","note":"","colorHint":"other"}],"structureSample":"Yesterday I woke up very early.","structureSampleCn":"时间状语 + 主语 + 谓语(过去式) + 程度状语","tips":["注意get up变为过去式got up"]},{"id":"sent-4","order":4,"correctSentence":"I've just arrived by train.","cnHint":"我刚坐火车到。","blocks":[{"id":"b1","text":"I've","isChunk":true,"posLabel":"主谓缩写","roleLabel":"主语+助动词","note":"I have","colorHint":"subject"},{"id":"b2","text":"just","isChunk":false,"posLabel":"副词","roleLabel":"状语","note":"","colorHint":"other"},{"id":"b3","text":"arrived","isChunk":false,"posLabel":"动词","roleLabel":"谓语","note":"现在完成时","colorHint":"verb"},{"id":"b4","text":"by train","isChunk":true,"posLabel":"介词短语","roleLabel":"状语","note":"交通方式","colorHint":"chunk"}],"structureSample":"She has just come by bus.","structureSampleCn":"主语 + have/has + just + 过去分词 + 方式状语","tips":["by + 交通工具，中间不加冠词"]},{"id":"sent-5","order":5,"correctSentence":"But I'm still having breakfast.","cnHint":"可我还在吃早饭呢。","blocks":[{"id":"b1","text":"But","isChunk":false,"posLabel":"连词","roleLabel":"状语","note":"","colorHint":"other"},{"id":"b2","text":"I'm","isChunk":true,"posLabel":"主谓缩写","roleLabel":"主语+助动词","note":"I am","colorHint":"subject"},{"id":"b3","text":"still","isChunk":false,"posLabel":"副词","roleLabel":"状语","note":"","colorHint":"other"},{"id":"b4","text":"having breakfast","isChunk":true,"posLabel":"动词短语","roleLabel":"谓语","note":"现在进行时","colorHint":"verb"}],"structureSample":"But he is still doing homework.","structureSampleCn":"连词 + 主语 + be动词 + still + v-ing + 宾语","tips":["have breakfast 整体作为‘吃早饭’的动作"]},{"id":"sent-6","order":6,"correctSentence":"Do you always get up so late?","cnHint":"你总是起得这么晚吗？","blocks":[{"id":"b1","text":"Do","isChunk":false,"posLabel":"助动词","roleLabel":"谓语(辅助)","note":"疑问句开头","colorHint":"verb"},{"id":"b2","text":"you","isChunk":false,"posLabel":"代词","roleLabel":"主语","note":"","colorHint":"subject"},{"id":"b3","text":"always","isChunk":false,"posLabel":"副词","roleLabel":"状语","note":"","colorHint":"other"},{"id":"b4","text":"get up","isChunk":true,"posLabel":"动词短语","roleLabel":"谓语","note":"","colorHint":"verb"},{"id":"b5","text":"so late","isChunk":true,"posLabel":"副词短语","roleLabel":"状语","note":"","colorHint":"other"}],"structureSample":"Do you always eat fish?","structureSampleCn":"助动词Do + 主语 + 频度副词 + 动词原形 + 宾语/状语","tips":["一般现在时的疑问句需要助动词Do"]}]},"summaryWriting":{"title":"《Breakfast or lunch?》概要写作互动教学任务","taskRequirements":["阅读课文，用 55-65 个英文单词概括故事内容。","必须包含时间、人物、核心冲突（起晚了）及结局。","使用第三人称叙述，确保逻辑通顺。"],"scoringRubric":["内容完整度：涵盖起晚、姨妈来访、时间误会三个关键点。","语言准确性：时态统一（一般过去时），语法无误。","篇幅控制：字数在 55-65 词之间。","连贯性：使用适当的连接词使故事流畅。"],"mainIdea":"讲述了作者在周日起床极晚，导致在下午一点仍将其视为“早餐”，从而与姨妈产生误会的故事。","keyPoints":["作者周日起床很晚且天气阴沉。","露西姨妈到达并打电话告知要来访。","作者称自己在吃早餐，但此时已是下午一点。"],"guideSteps":[{"id":"step1","title":"Step1 找主旨 🎯","teacherGuide":"引导学生观察标题和结尾，思考故事的核心矛盾是什么。","studentTask":"用一句话概括故事讲了什么。","scaffolds":["The story is about...","The main conflict is..."],"sampleSentences":["The story is about a person who woke up very late on a Sunday."],"tips":["关注标题中的 'Breakfast or lunch'，思考为什么会产生这个疑问。"]},{"id":"step2","title":"Step2 筛要点 🔍","teacherGuide":"引导学生剔除细节（如天气、窗外景色），提取关键情节。","studentTask":"列出故事发展的三个关键时间点/事件。","scaffolds":["First, ... Then, ... Finally, ..."],"sampleSentences":["First, the author got up late. Then, Aunt Lucy called. Finally, they realized it was 1 p.m."],"tips":["删除 'It was raining' 等不影响主线的描述性句子。"]},{"id":"step3","title":"Step3 辨观点 💡","teacherGuide":"引导学生将第一人称 'I' 转换为第三人称 'the author' 或 'he/she'。","studentTask":"将原文中的对话转化为间接引语。","scaffolds":["The author told her that...","Aunt Lucy asked if..."],"sampleSentences":["The author told Aunt Lucy that he was having breakfast."],"tips":["概要写作通常要求客观叙述，避免直接引用对话。"]},{"id":"step4","title":"Step4 换表达 ✍️","teacherGuide":"鼓励学生使用同义词替换，避免简单重复原文词汇。","studentTask":"尝试用 'extremely late' 替换 'very late'，用 'informed' 替换 'said'。","scaffolds":["Instead of 'get up late', use 'wake up late' or 'oversleep'."],"sampleSentences":["The author overslept on a rainy Sunday."],"tips":["使用更高级的动词可以让文章看起来更专业。"]},{"id":"step5","title":"Step5 理逻辑 🔗","teacherGuide":"指导学生使用逻辑连接词将碎片化的要点串联成段。","studentTask":"使用 However, Meanwhile, To his surprise 等词连接句子。","scaffolds":["However","Meanwhile","Surprisingly"],"sampleSentences":["However, Aunt Lucy was surprised to learn that it was already one o'clock."],"tips":["确保时间线清晰，不要跳跃。"]},{"id":"step6","title":"Step6 自检 ✅","teacherGuide":"对照字数要求和要点清单进行最后核对。","studentTask":"检查时态是否统一，字数是否在 55-65 词之间。","scaffolds":["Check the tense: Past Tense?","Word count: 55-65?"],"sampleSentences":["(Self-check: The summary is 60 words. All points are covered.)"],"tips":["如果字数过多，尝试合并短句；如果过少，增加细节描述。"]}],"modelSummary":"On a rainy Sunday, the author woke up extremely late. Meanwhile, Aunt Lucy arrived by train and called to inform him of her visit. The author claimed he was still having breakfast, which surprised Aunt Lucy. She pointed out that it was already one o'clock, revealing the funny misunderstanding between the author's late start and the actual time of day.","modelWordCount":60,"checklist":["是否使用了第三人称叙述？","是否包含了 '下午一点' 这个关键时间点？","时态是否全部统一为一般过去时？","字数是否严格控制在 55-65 词之间？"],"tips":["注意 'breakfast' 和 'lunch' 的对比是本文的幽默点，必须在概要中体现。","避免在概要中写 'I thought' 或 'she said'，尽量用叙述性语言。"],"sampleSentences":["The author overslept on Sunday.","Aunt Lucy was shocked by the time.","A funny misunderstanding occurred regarding breakfast."]},"paraRewrite":{"title":"Lesson 2 Breakfast or lunch? 读写互动任务","compressTasks":[{"id":"compress-0","mode":"compress","sourceParagraph":"It was Sunday. I never get up early on Sundays. I sometimes stay in bed until lunchtime. Last Sunday I got up very late. I looked out of the window. It was dark outside. 'What a day!' I thought. 'It's raining again.' Just then, the telephone rang. It was my aunt Lucy. 'I've just arrived by train,' she said. 'I'm coming to see you.' 'But I'm still having breakfast,' I said. 'What are you doing?' she asked. 'I'm having breakfast,' I repeated. 'Dear me,' she said. 'Do you always get up so late? It's one o'clock!'","sourceWordCount":96,"targetWordHint":"约 40-50 词","taskRequirements":["保留核心情节：起床时间、姨妈来访、时间上的矛盾","删除重复的对话和琐碎的心理描写","使用同义词或概括性词汇改写"],"guideSteps":[{"id":"c1","title":"🔍 提取主干","teacherGuide":"引导学生识别段落中的核心人物、时间、事件。","studentTask":"列出故事的三个关键点：时间、人物、冲突点。","scaffolds":["Who is the main character?","What happened on Sunday?"],"sampleSentences":["The narrator got up late on Sunday."],"tips":["忽略关于天气的具体描写"]},{"id":"c2","title":"✂️ 删减冗余","teacherGuide":"指导学生删除重复的对话（如重复说两次吃早饭）。","studentTask":"将对话部分改为间接引语或概括性描述。","scaffolds":["Instead of 'I'm having breakfast', use 'the narrator claimed to be having breakfast'."],"sampleSentences":["Aunt Lucy called to say she was coming."],"tips":["尽量将多句短句合并为一句长句"]},{"id":"c3","title":"🔄 同义改写","teacherGuide":"鼓励使用更高级的词汇概括状态。","studentTask":"用一个词代替 'stay in bed until lunchtime' 或 'get up very late'。","scaffolds":["oversleep","wake up late"],"sampleSentences":["The narrator overslept on Sunday."],"tips":["尝试使用副词来精简句子"]},{"id":"c4","title":"🧩 逻辑串联","teacherGuide":"使用连接词使缩写后的段落流畅。","studentTask":"使用 however, then, but 等词将句子连接起来。","scaffolds":["However","Suddenly","To his surprise"],"sampleSentences":["However, when Aunt Lucy called, she was shocked to find it was already 1 p.m."],"tips":["确保时间线清晰"]},{"id":"c5","title":"📏 最终核对","teacherGuide":"检查词数是否达标，是否遗漏关键信息。","studentTask":"对照原文，确认没有添加原文中不存在的新观点。","scaffolds":["Check the word count."],"sampleSentences":["Final check of the summary."],"tips":["检查时态是否统一"]}],"modelAnswer":"Last Sunday, the narrator woke up very late. When Aunt Lucy called to say she was visiting, the narrator claimed to be having breakfast. Aunt Lucy was shocked to discover that it was already one o'clock in the afternoon.","modelWordCount":39,"checklist":["是否保留了 '1点钟' 这个关键时间点？","是否删除了关于天气的描写？","词数是否在 50 词左右？","是否将对话改为了叙述形式？"],"tips":["缩写不是简单的删减，而是信息的重新组织。"],"sampleSentences":["The narrator woke up late on Sunday.","Aunt Lucy was surprised by the time."],"mainIdea":"讲述作者在周日起床极晚，导致在下午一点仍称在吃早饭，令姨妈惊讶的故事。","focusPoints":["信息概括能力","间接引语转换","精炼表达"]}],"expandTasks":[{"id":"expand-0","mode":"expand","sourceParagraph":"It was Sunday. I never get up early on Sundays. I sometimes stay in bed until lunchtime. Last Sunday I got up very late. I looked out of the window. It was dark outside. 'What a day!' I thought. 'It's raining again.' Just then, the telephone rang. It was my aunt Lucy. 'I've just arrived by train,' she said. 'I'm coming to see you.' 'But I'm still having breakfast,' I said. 'What are you doing?' she asked. 'I'm having breakfast,' I repeated. 'Dear me,' she said. 'Do you always get up so late? It's one o'clock!'","sourceWordCount":96,"targetWordHint":"约 120-150 词","taskRequirements":["在不改变主旨的前提下，增加细节描写","增加对环境（天气、房间）的描写","增加人物的心理活动或动作细节","扩充对话，使语气更自然"],"guideSteps":[{"id":"e1","title":"🎨 环境渲染","teacherGuide":"引导学生通过感官描写（视觉、听觉）扩充天气部分。","studentTask":"描写雨天给人的感觉，以及房间内的氛围。","scaffolds":["grey sky","pattering rain","cozy bed"],"sampleSentences":["The sky was a dull grey, and raindrops were drumming steadily against the glass."],"tips":["使用形容词增加画面感"]},{"id":"e2","title":"💭 心理挖掘","teacherGuide":"引导学生描写作者起床时的慵懒心态。","studentTask":"增加作者在床上的感受或对周日的看法。","scaffolds":["feel lazy","enjoy the silence","stretch"],"sampleSentences":["I stretched my arms and sighed, enjoying the rare luxury of having no alarm clock."],"tips":["描写心理活动能增加人物立体感"]},{"id":"e3","title":"📞 动作细化","teacherGuide":"将简单的 '电话响了' 扩充为一系列动作。","studentTask":"描写接电话时的动作（如揉眼睛、寻找电话）。","scaffolds":["suddenly","reach for the phone","sleepy voice"],"sampleSentences":["Suddenly, the loud ringing of the telephone broke the silence, forcing me to rub my sleepy eyes."],"tips":["使用动词短语增加动态感"]},{"id":"e4","title":"💬 对话扩充","teacherGuide":"增加对话中的语气词或对方的反应描写。","studentTask":"在对话之间加入人物的表情或语气描述。","scaffolds":["confusedly","with a laugh","in disbelief"],"sampleSentences":["'Dear me!' she exclaimed in utter disbelief, her voice sounding sharp through the receiver."],"tips":["描写说话时的神态"]},{"id":"e5","title":"🏁 结局深化","teacherGuide":"引导学生描写听到 '一点钟' 后的反应。","studentTask":"增加作者意识到时间后的惊讶反应。","scaffolds":["shocked","glance at the clock","embarrassed"],"sampleSentences":["I froze and glanced at the clock on the wall, realizing with horror that it was already 1 p.m."],"tips":["给故事一个更有力的收尾"]}],"modelAnswer":"It was a lazy Sunday. I have a habit of sleeping in on weekends, sometimes staying tucked in my warm bed until the very last moment. Last Sunday was no exception; I woke up feeling completely refreshed but incredibly late. Looking out of the window, I saw a gloomy, grey sky, and the rain was drumming steadily against the glass. 'What a miserable day!' I thought. Just as I was contemplating going back to sleep, the telephone rang loudly. It was my Aunt Lucy. She told me excitedly that she had just arrived by train and was on her way to visit. Still half-asleep, I replied that I was having breakfast. There was a long silence before she asked in confusion, 'What are you doing?' When I repeated my answer, she exclaimed in disbelief, 'Dear me! Do you always wake up this late? It's already one o'clock!'","modelWordCount":147,"checklist":["是否增加了对天气的具体描写？","是否增加了接电话时的动作或心理？","对话是否变得更自然且富有情感？","词数是否达到了 120 词以上？"],"tips":["扩写不是重复，而是通过细节（Details）让故事更生动。"],"sampleSentences":["The rain was drumming steadily against the glass.","I realized with horror that it was already 1 p.m."],"mainIdea":"通过增加环境描写和心理细节，生动地展现作者周日起床极晚并与姨妈产生误会的幽默场景。","focusPoints":["细节描写能力","氛围营造","读后续写基础训练"]}]},"sentencePolish":{"title":"📖 读后续写句式升级训练：从简单句到高级句","taskRequirements":["识别原文中的简单句","分析句子间的逻辑关系","运用非谓语动词、从句等高级语法进行润色","在保持原意的前提下提升句子的文学性和流畅度"],"guideSteps":[{"id":"s1","title":"Step 1 识别原句 🔍","teacherGuide":"找出文中结构单一、缺乏起伏的简单句。","studentTask":"阅读原文，锁定需要升级的短句。","scaffolds":["Simple Sentence","Subject + Verb + Object"],"sampleSentences":["I looked out of the window."],"tips":["关注那些连续出现且长度相近的短句。"]},{"id":"s2","title":"Step 2 分析逻辑 🧠","teacherGuide":"思考句子之间是并列、先后、因果还是伴随关系。","studentTask":"分析原句与前后文的逻辑联系。","scaffolds":["Simultaneous (伴随)","Sequential (先后)","Causal (因果)"],"sampleSentences":["Looking out of the window, I saw... (伴随)"],"tips":["思考：这两个动作是同时发生的吗？还是一个导致了另一个？"]},{"id":"s3","title":"Step 3 选择语法 🛠️","teacherGuide":"根据逻辑选择合适的升级工具（如：分词短语、定语从句、状语从句）。","studentTask":"决定使用哪种语法结构来合并或润色句子。","scaffolds":["Present Participle (-ing)","Past Participle (-ed)","Relative Clause","Adverbial Clause"],"sampleSentences":["Using 'with' structure or 'v-ing' for background."],"tips":["读后续写中，非谓语动词（-ing/-ed）是最高频的加分项。"]},{"id":"s4","title":"Step 4 改写润色 ✨","teacherGuide":"将简单句转化为具有节奏感的复杂句，增加细节描写。","studentTask":"尝试写出两个不同版本的升级句子。","scaffolds":["Version A: Non-finite verb","Version B: Clause"],"sampleSentences":["Looking out of the window, I found it dark outside."],"tips":["避免过度堆砌词汇，确保语义自然流畅。"]},{"id":"s5","title":"Step 5 自查校验 ✅","teacherGuide":"检查时态是否统一，主谓是否一致，原意是否丢失。","studentTask":"对照原句和语法规则进行最后核对。","scaffolds":["Tense consistency","Subject-verb agreement"],"sampleSentences":["Check if 'got up' (past) matches 'looked' (past)."],"tips":["大声朗读一遍，感受句子的节奏感。"]}],"items":[{"id":"sp-0","order":1,"originalSentence":"I looked out of the window. It was dark outside.","taskHint":"将两个简单的动作/状态合并，增强画面感。","logicHint":"伴随/结果","suggestedStructures":["现在分词","with结构"],"versionA":"Looking out of the window, I found it dark outside.","versionALabel":"版本A · 非谓语","versionB":"I looked out of the window only to find that it was dark outside.","versionBLabel":"版本B · 不定式(结果)","tips":["'only to find' 常用于表达出乎意料的结果，增加戏剧感。"]},{"id":"sp-1","order":2,"originalSentence":"Just then, the telephone rang. It was my aunt Lucy.","taskHint":"将身份识别与动作结合，使叙述更紧凑。","logicHint":"同位语/定语","suggestedStructures":["同位语","定语从句"],"versionA":"Just then, the telephone rang, and on the other end was my aunt Lucy.","versionALabel":"版本A · 倒装/并列","versionB":"Just then, the telephone rang, and the caller turned out to be my aunt Lucy.","versionBLabel":"版本B · 谓语升级","tips":["在续写中，描述电话响起可以用 'The phone shattered the silence' 等词汇增强氛围。"]},{"id":"sp-2","order":3,"originalSentence":"Last Sunday I got up very late. I looked out of the window.","taskHint":"将起床的时间状态作为背景，引导出观察动作。","logicHint":"先后/背景","suggestedStructures":["Having done","After"],"versionA":"Having got up very late last Sunday, I looked out of the window.","versionALabel":"版本A · 完成分词","versionB":"After getting up very late last Sunday, I cast a glance out of the window.","versionBLabel":"版本B · 介词短语","tips":["'cast a glance' 比 'look' 更具文学色彩。"]}],"checklist":["✅ 是否保留了原句的所有关键信息？","✅ 是否使用了非谓语动词或从句？","✅ 时态是否与原文（一般过去时）保持一致？","✅ 句子读起来是否有节奏感，而非简单的词汇堆砌？"],"tips":["💡 读后续写技巧：尽量避免连续使用 'I + 动词' 的句式，尝试将主语多样化，或使用非谓语动词开头来打破单调感。"],"sampleSentences":["Original: He opened the door. He saw a cat.","Upgraded: Opening the door, he was surprised to see a cat sitting there."]},"writingMaterial":{"title":"Breakfast or lunch?","coreTheme":"生活习惯","coreThemeExplain":"探讨个人作息习惯及其在社交/家庭关系中的冲突","relatedThemes":["时间管理","家庭关系","个人纪律"],"thesisSentences":["Personal habits can vary significantly from person to person.","A lack of discipline in daily routines may lead to unexpected conflicts with others."],"evidenceSentences":["Staying in bed until lunchtime is a sign of an irregular daily routine.","Getting up very late can cause a disconnect between one's own schedule and the outside world."],"transferSentences":["While some people prefer to maintain a strict schedule, others, like the narrator in the story, tend to stay in bed until lunchtime.","It is often observed that those who get up late may find themselves struggling to keep pace with the fast-moving world.","Had the narrator developed a more disciplined routine, he would not have been surprised by his aunt's arrival at one o'clock."],"usageTips":["适用于讨论'生活方式'、'时间管理'或'青少年习惯'类话题。","迁移句可用于主体段落，通过对比（While...）或假设（Had...）增强论证深度。","将原文的口语化描述（如'What a day!'）转化为书面议论，提升作文档次。"],"suitableTopics":["Healthy Habits","Time Management","Generation Gap/Family Communication"],"tips":["一体机建议：先揭主题词 → 齐读观点句 → 再背 1 组迁移句。","鼓励学生把迁移句抄进写作素材本，按主题分类。"],"sampleSentences":["Developing a regular routine is essential for a productive life.","The contrast between the narrator's laziness and the aunt's punctuality highlights the importance of time management."]},"practicalWriting":{"title":"Lesson 2 Breakfast or lunch?","theme":"生活习惯与时间管理","zhongkao":{"level":"zhongkao","genre":"email","genreLabel":"电子邮件","background":"你最近因为像课文中的主人公一样起得太晚，错过了与朋友的约定，现在想给朋友写封邮件道歉并解释原因。","audience":"好朋友","purpose":"道歉并重新约定时间","keyPoints":["对迟到/缺席表示歉意","解释原因（起晚了/睡过头了）","提议一个新的见面时间"],"wordCountHint":"约60词","targetWords":60,"formatNotes":["包含称呼","正文分段","落款"],"taskInstruction":"请给你的朋友写一封电子邮件，就你上周日起晚了导致没能按时赴约表示歉意，并邀请对方重新见面。","guideSteps":[{"id":"s1","title":"Step1 礼貌开篇","teacherGuide":"引导学生使用非正式的问候语并直接表达歉意。","studentTask":"写出称呼并用 I'm sorry... 开头。","scaffolds":["Dear [Name],"],"sampleSentences":["I'm so sorry that I missed our meeting last Sunday."],"tips":["语气要诚恳"]},{"id":"s2","title":"Step2 解释原因","teacherGuide":"结合课文情境，描述起晚了的情况。","studentTask":"描述自己起床的时间或状态。","scaffolds":["The reason is that...","I got up very late..."],"sampleSentences":["I got up very late and didn't see your messages."],"tips":["可以使用’oversleep’这个词"]},{"id":"s3","title":"Step3 描述细节","teacherGuide":"增加细节使描述更生动，如天气或心情。","studentTask":"简单描述当时的情况。","scaffolds":["It was raining outside...","I was still having breakfast..."],"sampleSentences":["It was raining, so I stayed in bed until noon."],"tips":["模仿课文中的简单句"]},{"id":"s4","title":"Step4 提出新方案","teacherGuide":"引导学生使用疑问句提出新的约定。","studentTask":"询问对方下周末是否有空。","scaffolds":["How about...?","Would you like to...?"],"sampleSentences":["How about meeting this Sunday at 10 a.m.?"],"tips":["记得给出具体的时间点"]},{"id":"s5","title":"Step5 结尾落款","teacherGuide":"使用友好的结语并署名。","studentTask":"写下期待回复的句子并署名。","scaffolds":["Looking forward to your reply.","Best,"],"sampleSentences":["I hope you can forgive me. Best, [Your Name]."],"tips":["落款要简洁"]}],"modelEssay":"Dear Tom,\n\nI'm so sorry that I missed our meeting last Sunday. I got up very late and didn't see your messages. It was raining outside, so I stayed in bed until noon. I felt terrible about it. How about meeting this Sunday at 10 a.m. instead?\n\nI hope you can forgive me. Looking forward to your reply!\n\nBest,\nLi Hua","modelWordCount":61,"keyPatterns":["I'm so sorry that...","How about doing something...?","Looking forward to..."],"checklist":["是否包含了道歉、原因和新约定？","时态是否正确（过去式描述原因，将来式提建议）？","邮件格式是否完整？"],"tips":[],"sampleSentences":[]},"gaokao":{"level":"gaokao","genre":"speech","genreLabel":"演讲稿","background":"学校正在举办“健康生活方式”主题周，你被邀请在班级分享关于“时间管理与早起”的看法，你可以引用课文中那个起晚了的人作为反面教材。","audience":"同班同学","purpose":"倡导早起和规律生活","keyPoints":["引用课文案例（起晚了导致尴尬/错过机会）","分析起晚了带来的负面影响","建议如何建立良好的早起习惯"],"wordCountHint":"约80词","targetWords":80,"formatNotes":["包含开场白","逻辑清晰的论述","有力的结尾"],"taskInstruction":"请写一篇短小的演讲稿，讨论早起的重要性，并鼓励同学们养成规律的生活习惯。","guideSteps":[{"id":"s1","title":"Step1 吸引注意","teacherGuide":"用一个反问句或课文中的尴尬场景开场。","studentTask":"设计一个引人入胜的开头。","scaffolds":["Have you ever...?","Imagine a situation where..."],"sampleSentences":["Have you ever woken up at 1 p.m. and realized you missed the whole morning?"],"tips":["使用反问句增强互动感"]},{"id":"s2","title":"Step2 引入案例","teacherGuide":"将课文中的人物行为转化为论点。","studentTask":"描述起晚了会导致的尴尬情况。","scaffolds":["As we saw in the story...","Getting up too late can lead to..."],"sampleSentences":["Like the character in our lesson, oversleeping can make us miss important visits or opportunities."],"tips":["使用'lead to'表达因果"]},{"id":"s3","title":"Step3 分析利弊","teacherGuide":"对比早起与晚起的差异，提升语言档次。","studentTask":"阐述早起对学习或生活的积极影响。","scaffolds":["In contrast, early risers tend to...","A regular routine helps us..."],"sampleSentences":["In contrast, a regular routine allows us to be more productive and energetic throughout the day."],"tips":["使用'productive'等高级词汇"]},{"id":"s4","title":"Step4 给出建议","teacherGuide":"提供具体可行的建议。","studentTask":"建议同学们如何改善习惯。","scaffolds":["I suggest that we should...","It is advisable to..."],"sampleSentences":["Therefore, it is advisable to set an alarm and avoid staying up late."],"tips":["使用虚拟语气或建议句型"]},{"id":"s5","title":"Step5 总结号召","teacherGuide":"用有力的句子结束演讲，呼吁行动。","studentTask":"写一句激励性的结尾。","scaffolds":["Let's start from...","Together, we can..."],"sampleSentences":["Let's embrace a healthier lifestyle and start our days early! Thank you."],"tips":["结尾要简洁有力"]}],"modelEssay":"Dear classmates,\n\nHave you ever woken up at 1 p.m. and realized you missed the whole morning? Like the character in our lesson, oversleeping can lead to embarrassing situations and missed opportunities. In contrast, a regular routine allows us to be more productive and energetic. Therefore, it is advisable to set a strict schedule and avoid staying up late. Let's embrace a healthier lifestyle and start our days early to make the most of our time! Thank you.","modelWordCount":78,"keyPatterns":["Lead to embarrassing situations","In contrast, ... allows us to...","Make the most of..."],"checklist":["是否采用了演讲稿的口吻？","是否对比了早起与晚起的差异？","词汇是否多样化（如productive, embrace）？"],"tips":[],"sampleSentences":[]}},"listeningMuscle":{"title":"Lesson 2 Breakfast or lunch? 早餐还是午餐？","theme":"Lesson 2 Breakfast or lunch?","tipWarmup":"快速浏览课文，熟悉故事背景，尝试流畅地听一遍全文。","tipDictation":"进入扣词模式：听到关键词立即输入，拼对自动归位，拼错请根据提示修正。","tipComprehension":"在不看文本的情况下，尝试回答关于故事细节的问题。","tipShadow":"紧跟原声进行影子跟读，模仿语调，训练听觉与发音的同步率。","tipNoise":"开启背景噪音模式，在干扰环境下精准捕捉关键信息。","comprehensionQs":[{"q":"作者在星期天通常几点起床？","a":"作者从不早起，有时会一直躺到午饭时间。"},{"q":"露西姨妈什么时候给作者打电话的？","a":"在作者起床后，且当时已经是下午一点了。"},{"q":"露西姨妈打电话时的目的是什么？","a":"她刚坐火车到达，准备去看望作者。"}],"sentences":[{"id":"lm-s-0-It_was_Sunda","en":"It was Sunday.","cn":"那是个星期天。","wordAids":[{"word":"Sunday","phonetic":"ˈsʌndeɪ","gloss":"星期日"}]},{"id":"lm-s-1-I_never_get_","en":"I never get up early on Sundays.","cn":"星期天我从不早起。","wordAids":[{"word":"never","phonetic":"ˈnevə","gloss":"从不"},{"word":"get up","phonetic":"ɡet ʌp","gloss":"起床"},{"word":"early","phonetic":"ˈɜːli","gloss":"早地"}]},{"id":"lm-s-2-I_sometimes_","en":"I sometimes stay in bed until lunchtime.","cn":"有时候我会一直躺到午饭时间。","wordAids":[{"word":"sometimes","phonetic":"ˈsʌmtaɪmz","gloss":"有时"},{"word":"stay","phonetic":"steɪ","gloss":"停留/保持"},{"word":"until","phonetic":"ənˈtɪl","gloss":"直到"},{"word":"lunchtime","phonetic":"ˈlʌntʃtaɪm","gloss":"午餐时间"}]},{"id":"lm-s-3-Last_Sunday_","en":"Last Sunday I got up very late.","cn":"上个星期天我起得很晚。","wordAids":[{"word":"last","phonetic":"lɑːst","gloss":"上一个的"},{"word":"got up","phonetic":"ɡɒt ʌp","gloss":"起床(过去式)"},{"word":"late","phonetic":"leɪt","gloss":"晚地"}]},{"id":"lm-s-4-I_looked_out","en":"I looked out of the window.","cn":"我朝窗外望去。","wordAids":[{"word":"looked","phonetic":"lʊkt","gloss":"看/望"},{"word":"out of","phonetic":"aʊt əv","gloss":"从...向外"},{"word":"window","phonetic":"ˈwɪndəʊ","gloss":"窗户"}]},{"id":"lm-s-5-It_was_dark_","en":"It was dark outside.","cn":"外面天色阴沉。","wordAids":[{"word":"dark","phonetic":"dɑːk","gloss":"黑暗的/阴沉的"},{"word":"outside","phonetic":"ˌaʊtˈsaɪd","gloss":"在外面"}]},{"id":"lm-s-6-'What_a_day!","en":"'What a day!'","cn":"“真倒霉！”","wordAids":[{"word":"what a","phonetic":"wɒt ə","gloss":"多么...啊"},{"word":"day","phonetic":"deɪ","gloss":"日子/一天"}]},{"id":"lm-s-7-I_thought.","en":"I thought.","cn":"我心想。","wordAids":[{"word":"thought","phonetic":"θɔːt","gloss":"想/思考"}]},{"id":"lm-s-8-'It's_rainin","en":"'It's raining again.'","cn":"“又下雨了。”","wordAids":[{"word":"raining","phonetic":"ˈreɪnɪŋ","gloss":"下雨"},{"word":"again","phonetic":"əˈɡen","gloss":"再次"}]},{"id":"lm-s-9-Just_then,_t","en":"Just then, the telephone rang.","cn":"就在这时，电话响了。","wordAids":[{"word":"just then","phonetic":"dʒʌst ðen","gloss":"就在那时"},{"word":"telephone","phonetic":"ˈtelɪfəʊn","gloss":"电话"},{"word":"rang","phonetic":"ræŋ","gloss":"响/鸣(ring过去式)"}]},{"id":"lm-s-10-It_was_my_au","en":"It was my aunt Lucy.","cn":"是我的露西姨妈打来的。","wordAids":[{"word":"aunt","phonetic":"ɑːnt","gloss":"姨妈/姑妈"},{"word":"Lucy","phonetic":"ˈluːsi","gloss":"露西(人名)"}]},{"id":"lm-s-11-'I've_just_a","en":"'I've just arrived by train,' she said.","cn":"“我刚坐火车到，” 她说。","wordAids":[{"word":"just","phonetic":"dʒʌst","gloss":"刚刚"},{"word":"arrived","phonetic":"əˈraɪvd","gloss":"到达"},{"word":"train","phonetic":"treɪn","gloss":"火车"}]},{"id":"lm-s-12-'I'm_coming_","en":"'I'm coming to see you.'","cn":"“我马上来看你。”","wordAids":[{"word":"coming","phonetic":"ˈkʌmɪŋ","gloss":"来"},{"word":"see","phonetic":"siː","gloss":"看望/见"}]},{"id":"lm-s-13-But_I'm_stil","en":"But I'm still having breakfast,' I said.","cn":"“可我还在吃早饭呢。” 我说。","wordAids":[{"word":"still","phonetic":"stɪl","gloss":"仍然"},{"word":"having","phonetic":"ˈhævɪŋ","gloss":"吃/用餐"},{"word":"breakfast","phonetic":"ˈbrekfəst","gloss":"早餐"}]},{"id":"lm-s-14-What_are_you","en":"What are you doing?'","cn":"“你在干什么？”","wordAids":[{"word":"what","phonetic":"wɒt","gloss":"什么"},{"word":"doing","phonetic":"ˈduːɪŋ","gloss":"做"}]},{"id":"lm-s-15-she_asked.","en":"she asked.","cn":"她问道。","wordAids":[{"word":"asked","phonetic":"ɑːskt","gloss":"询问"}]},{"id":"lm-s-16-I'm_having_b","en":"I'm having breakfast,' I repeated.","cn":"“我正在吃早饭。” 我又说了一遍。","wordAids":[{"word":"having","phonetic":"ˈhævɪŋ","gloss":"吃"},{"word":"breakfast","phonetic":"ˈbrekfəst","gloss":"早餐"},{"word":"repeated","phonetic":"rɪˈpiːtɪd","gloss":"重复"}]},{"id":"lm-s-17-Dear_me,'_sh","en":"Dear me,' she said.","cn":"“天哪，” 她说。","wordAids":[{"word":"dear me","phonetic":"dɪə miː","gloss":"天哪(感叹词)"}]},{"id":"lm-s-18-'Do_you_alwa","en":"'Do you always get up so late?","cn":"“你总是起得这么晚吗？","wordAids":[{"word":"always","phonetic":"ˈɔːlweɪz","gloss":"总是"},{"word":"get up","phonetic":"ɡet ʌp","gloss":"起床"},{"word":"late","phonetic":"leɪt","gloss":"晚地"}]},{"id":"lm-s-19-It's_one_o'c","en":"It's one o'clock!'","cn":"都一点钟了！","wordAids":[{"word":"one","phonetic":"wʌn","gloss":"一点"},{"word":"o'clock","phonetic":"əˈklɒk","gloss":"点钟"}]}]}},"accessGate":[{"name":"苗苗","code":""}]};</script>
+<script>(function(){
+  var P = window.__OFFLINE_PACK__;
+  var main = document.getElementById('main');
+  if(!P||!P.modules){
+    if(main)main.innerHTML='<p class="muted">数据包缺失，请让老师重新导出或部署。</p>';
+    return;
+  }
+
+  function runApp(){
+  var mods = P.modules;
+  var meta = P.meta||{};
+  var order = [
+    ['passage','📖 课文'],
+    ['mindMap','🌳 思维导图'],
+    ['cloze','🧩 完形'],
+    ['grammarLogic','🔗 语法链'],
+    ['continuationWriting','✍️ 读后续写'],
+    ['sentenceBuild','🧱 积木'],
+    ['summaryWriting','📝 概要'],
+    ['paraRewrite','📐 缩扩写'],
+    ['sentencePolish','✨ 润色'],
+    ['writingMaterial','💎 素材'],
+    ['practicalWriting','💌 应用文'],
+    ['listeningMuscle','🎧 听力']
+  ];
+  var nav = document.getElementById('nav');
+  var toastEl = document.getElementById('toast');
+  function toast(msg){
+    if(!toastEl)return;
+    toastEl.textContent=msg;toastEl.style.display='block';
+    clearTimeout(toastEl._t);toastEl._t=setTimeout(function(){toastEl.style.display='none';},1800);
+  }
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function speak(text, lang){
+    if(!window.speechSynthesis||!text)return;
+    window.speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(String(text));
+    u.lang=lang||'en-US';u.rate=0.9;
+    window.speechSynthesis.speak(u);
+  }
+  function showPanel(id){
+    var panels=main.querySelectorAll('.panel');
+    for(var i=0;i<panels.length;i++)panels[i].classList.remove('active');
+    var el=document.getElementById('panel-'+id);
+    if(el)el.classList.add('active');
+    var btns=nav.querySelectorAll('button');
+    for(var j=0;j<btns.length;j++)btns[j].classList.toggle('active',btns[j].dataset.id===id);
+    try{history.replaceState(null,'','#'+id);}catch(e){}
+  }
+  function list(arr){return (arr||[]).map(function(x){return '<li>'+esc(x)+'</li>';}).join('');}
+  function btnRow(html){return '<div class="row">'+html+'</div>';}
+  var packKey='xxdd_offline_'+(meta.packId||meta.articleTitle||'pack');
+  function loadState(){try{return JSON.parse(localStorage.getItem(packKey)||'{}');}catch(e){return {};}}
+  function saveState(patch){
+    try{
+      var cur=loadState();
+      for(var k in patch)cur[k]=patch[k];
+      localStorage.setItem(packKey,JSON.stringify(cur));
+    }catch(e){}
+  }
+  var state=loadState();
+  var hasDraft=false;
+  try{
+    for(var _k in state){if(Object.prototype.hasOwnProperty.call(state,_k)){hasDraft=true;break;}}
+  }catch(e){}
+
+  var clearBtn=document.getElementById('btn-clear-draft');
+  if(clearBtn)clearBtn.onclick=function(){
+    if(!confirm('清除本机保存的练习草稿？不影响题目本身。'))return;
+    try{localStorage.removeItem(packKey);}catch(e){}
+    toast('已清除草稿，即将刷新');
+    setTimeout(function(){location.reload();},600);
+  };
+  var printBtn=document.getElementById('btn-print');
+  if(printBtn)printBtn.onclick=function(){window.print();};
+
+  function highlightEn(text, highlights){
+    var src=String(text||'');
+    var n=src.length;
+    if(!n)return '';
+    var cover=new Array(n);
+    (highlights||[]).forEach(function(h){
+      var a=Math.max(0,h.start|0), b=Math.min(n,h.end|0);
+      for(var i=a;i<b;i++)cover[i]=1;
+    });
+    var raw='', inHl=false;
+    for(var i=0;i<n;i++){
+      if(cover[i]&&!inHl){raw+='{{HL}}';inHl=true;}
+      if(!cover[i]&&inHl){raw+='{{EH}}';inHl=false;}
+      raw+=src.charAt(i);
+    }
+    if(inHl)raw+='{{EH}}';
+    return esc(raw).replace(/\{\{HL\}\}/g,'<span class="hl">').replace(/\{\{EH\}\}/g,'</span>');
+  }
+
+  function renderPassage(d){
+    var en=highlightEn(d.englishText||'', d.highlights||[]);
+    var cn=esc(d.chineseText||'');
+    var nHl=(d.highlights||[]).length;
+    return '<h2>📖 课文原文</h2><p class="muted">课堂划词已标黄（'+nHl+' 处）。可反复朗读；使用本机 TTS（离线系统语音）。练习草稿会保存在本机浏览器，下次打开同一文件可继续。</p>'+
+      btnRow('<button class="btn btn-primary" id="btn-read-en">朗读英文</button><button class="btn btn-ghost" id="btn-read-cn">朗读中文</button><button class="btn btn-ghost" id="btn-stop">停止</button>')+
+      '<div class="passage" id="en-pass">'+en+'</div>'+
+      (cn?'<div class="passage cn">'+cn+'</div>':'');
+  }
+  function bindPassage(){
+    var d=mods.passage;if(!d)return;
+    var be=document.getElementById('btn-read-en');
+    var bc=document.getElementById('btn-read-cn');
+    var bs=document.getElementById('btn-stop');
+    if(be)be.onclick=function(){speak(d.englishText,'en-US');};
+    if(bc)bc.onclick=function(){speak(d.chineseText,'zh-CN');};
+    if(bs)bs.onclick=function(){if(window.speechSynthesis)window.speechSynthesis.cancel();};
+  }
+
+  function renderMindMap(d){
+    var html='<h2>🌳 思维导图 · 手把手</h2><p class="muted">逐步选择题；答对后节点亮起。亦可一键展开全图。</p>';
+    html+='<div class="progress" id="mm-prog"></div><div id="mm-q"></div><div id="mm-tree" class="tree"></div>';
+    html+=btnRow('<button class="btn btn-ghost" id="mm-reveal">展开全图</button><button class="btn btn-ghost" id="mm-reset">重新开始</button>');
+    return html;
+  }
+  function bindMindMap(){
+    var d=mods.mindMap;if(!d)return;
+    var step=state.mmStep|0;
+    var steps=d.steps||[];
+    function shownIds(){
+      var s={};steps.slice(0,step).forEach(function(x){s[x.targetId]=1;});return s;
+    }
+    function treeHtml(revealed){
+      var sh=shownIds();
+      var openC=revealed||!!sh['center'];
+      var h='<div class="node center">'+(openC?(esc((d.centerEmoji||'🌳')+' '+d.centerEn)+'<div class="muted" style="color:#ccfbf1">'+esc(d.centerCn)+'</div>'):'🌱 主干？')+'</div>';
+      (d.branches||[]).forEach(function(b,bi){
+        var open=revealed||!!sh[b.id];
+        h+='<div class="node branch">'+(open?esc((b.emoji||'🌿')+' '+b.en)+'<div class="muted">'+esc(b.cn)+'</div>':'第 '+(bi+1)+' 支 · 还没画');
+        (b.details||[]).forEach(function(dt){
+          var dop=revealed||!!sh[dt.id];
+          h+='<div class="node detail">'+(dop?esc((dt.emoji||'✦')+' '+dt.en)+'<div class="muted">'+esc(dt.cn)+'</div>':'细节待长出')+'</div>';
+        });
+        h+='</div>';
+      });
+      return h;
+    }
+    function paint(revealed){
+      document.getElementById('mm-tree').innerHTML=treeHtml(!!revealed);
+      document.getElementById('mm-prog').textContent='进度 '+Math.min(step,steps.length)+' / '+steps.length;
+      var box=document.getElementById('mm-q');
+      if(revealed||step>=steps.length){box.innerHTML='<p class="muted">🎉 导图已完成，可展开全图复习。</p>';return;}
+      var cur=steps[step];
+      var choices=cur.choices&&cur.choices.length?cur.choices:[{id:'ok',en:cur.answerEn,cn:cur.answerCn}];
+      var oh=choices.map(function(c,i){
+        return '<button class="opt" data-i="'+i+'"><strong>'+String.fromCharCode(65+i)+'.</strong> '+esc(c.en)+'<div class="muted">'+esc(c.cn)+'</div></button>';
+      }).join('');
+      box.innerHTML='<div class="card"><div class="q">'+esc(cur.questionCn||'')+'</div><div class="muted">'+esc(cur.questionEn||'')+'</div><p class="muted">'+esc(cur.hintCn||'')+'</p>'+oh+'</div>';
+      var opts=box.querySelectorAll('.opt');
+      for(var i=0;i<opts.length;i++)(function(btn,idx){
+        btn.onclick=function(){
+          var c=choices[idx];
+          var ok=(c.id&&String(c.id).slice(-3)==='-ok')||(String(c.en).toLowerCase()===String(cur.answerEn||'').toLowerCase());
+          if(ok){btn.classList.add('correct');toast('✅ 正确');step++;saveState({mmStep:step});setTimeout(function(){paint(false);},400);}
+          else{btn.classList.add('wrong');toast('❌ 再试试');}
+        };
+      })(opts[i],i);
+    }
+    document.getElementById('mm-reveal').onclick=function(){paint(true);};
+    document.getElementById('mm-reset').onclick=function(){step=0;saveState({mmStep:0});paint(false);};
+    paint(false);
+  }
+
+  function renderCloze(d){
+    return '<h2>🧩 完形填空</h2><p class="muted">先选空，再点选项；可核对答案。</p><div class="progress" id="cloze-prog"></div><div id="cloze-pass" class="passage"></div><div id="cloze-opts"></div>'+
+      btnRow('<button class="btn btn-primary" id="cloze-check">核对</button><button class="btn btn-ghost" id="cloze-reset">重置</button><button class="btn btn-ghost" id="cloze-show">显示全部答案</button>');
+  }
+  function bindCloze(){
+    var d=mods.cloze;if(!d)return;
+    var items=d.items||[];
+    var picks=state.clozePicks||{};
+    var active=state.clozeActive!=null?+state.clozeActive:(items[0]?items[0].n:1);
+    if(!items.some(function(x){return x.n===active;}))active=items[0]?items[0].n:1;
+    function passHtml(){
+      var raw=d.passage||'';
+      return esc(raw).replace(/\[\[(\d+)\]\]/g,function(_,n){
+        var num=+n;var v=picks[num]||'';
+        var cls='blank'+(v?' filled':'');
+        return '<span class="'+cls+'" data-n="'+num+'" tabindex="0">'+(v?esc(v):('('+n+')'))+'</span>';
+      });
+    }
+    function paint(){
+      saveState({clozeActive:active});
+      document.getElementById('cloze-pass').innerHTML=passHtml();
+      document.getElementById('cloze-prog').textContent='当前空：#'+active+' · 已填 '+Object.keys(picks).length+'/'+items.length;
+      var it=items.filter(function(x){return x.n===active;})[0];
+      var box=document.getElementById('cloze-opts');
+      if(!it){box.innerHTML='';return;}
+      box.innerHTML='<div class="card"><div class="q">第 '+it.n+' 空 · '+esc(it.pos||'')+'</div>'+
+        (it.options||[]).map(function(o,oi){return '<button class="opt cloze-o" data-oi="'+oi+'">'+esc(o)+'</button>';}).join('')+
+        '<p class="muted">提示可在核对后查看解析</p></div>';
+      var blanks=document.querySelectorAll('#cloze-pass .blank');
+      for(var i=0;i<blanks.length;i++)blanks[i].onclick=function(ev){active=+ev.currentTarget.getAttribute('data-n');paint();};
+      var ops=box.querySelectorAll('.cloze-o');
+      for(var j=0;j<ops.length;j++)ops[j].onclick=function(ev){
+        var oi=+ev.currentTarget.getAttribute('data-oi');
+        picks[active]=(it.options||[])[oi];
+        saveState({clozePicks:picks,clozeActive:active});
+        var nxt=items.find(function(x){return picks[x.n]==null;});
+        if(nxt)active=nxt.n;
+        paint();
+      };
+    }
+    document.getElementById('cloze-check').onclick=function(){
+      var ok=0;
+      items.forEach(function(it){if(String(picks[it.n]||'').toLowerCase()===String(it.answer||'').toLowerCase())ok++;});
+      toast('答对 '+ok+' / '+items.length);
+      var blanks=document.querySelectorAll('#cloze-pass .blank');
+      for(var i=0;i<blanks.length;i++){
+        var n=+blanks[i].getAttribute('data-n');
+        var it=items.filter(function(x){return x.n===n;})[0];
+        blanks[i].classList.remove('ok','bad');
+        if(!it)continue;
+        if(String(picks[n]||'').toLowerCase()===String(it.answer||'').toLowerCase())blanks[i].classList.add('ok');
+        else if(picks[n])blanks[i].classList.add('bad');
+      }
+    };
+    document.getElementById('cloze-reset').onclick=function(){picks={};saveState({clozePicks:{}});active=items[0]?items[0].n:1;paint();};
+    document.getElementById('cloze-show').onclick=function(){
+      items.forEach(function(it){picks[it.n]=it.answer;});saveState({clozePicks:picks});paint();
+      var box=document.getElementById('cloze-opts');
+      box.innerHTML='<div class="card"><h3>解析</h3>'+items.map(function(it){return '<p><strong>#'+it.n+' '+esc(it.answer)+'</strong> · '+esc(it.explainCn||'')+'</p>';}).join('')+'</div>';
+    };
+    paint();
+  }
+
+  function renderGrammar(d){
+    return '<h2>🔗 打通语法逻辑链</h2><div class="card"><strong>'+esc(d.focusTitle||d.title||'')+'</strong><div class="muted">'+esc(d.theme||'')+' · '+esc(d.cefr||'')+'</div><p>'+esc(d.ruleCn||d.conceptCn||'')+'</p><pre style="white-space:pre-wrap;background:#f8fafc;padding:10px;border-radius:8px">'+(d.formulaLines||[]).map(esc).join('\n')+'</pre></div>'+
+      '<h3>热点短文</h3><div class="passage">'+esc(d.hotEn||'')+'</div><div class="passage cn">'+esc(d.hotCn||'')+'</div>'+
+      '<h3>练习题</h3><div id="gl-quiz"></div>'+
+      btnRow('<button class="btn btn-primary" id="gl-check">核对全部</button><button class="btn btn-ghost" id="gl-reset">重置</button>');
+  }
+  function bindGrammar(){
+    var d=mods.grammarLogic;if(!d)return;
+    var quiz=d.quiz||[];
+    var picks=state.glPicks||{};
+    var box=document.getElementById('gl-quiz');
+    function paint(){
+      box.innerHTML=quiz.map(function(q,qi){
+        var body='';
+        if(q.kind==='mcq'&&q.options){
+          body=q.options.map(function(o){
+            var on=String(picks[qi]||'')===String(o);
+            return '<button class="opt gl-o'+(on?' correct':'')+'" data-qi="'+qi+'" data-v="'+esc(o)+'">'+esc(o)+'</button>';
+          }).join('');
+        }else{
+          body='<input class="gl-in" data-qi="'+qi+'" style="width:100%;padding:8px;border:1px solid #e2e8f0;border-radius:8px" placeholder="作答…" value="'+esc(picks[qi]||'')+'"/>';
+        }
+        return '<div class="card" id="gl-q-'+qi+'"><div class="q">'+(qi+1)+'. '+esc(q.stem)+' <span class="muted">['+esc(q.kind)+']</span></div>'+body+'<div class="muted gl-fb" id="gl-fb-'+qi+'"></div></div>';
+      }).join('');
+      var ops=box.querySelectorAll('.gl-o');
+      for(var i=0;i<ops.length;i++)ops[i].onclick=function(ev){
+        picks[+ev.currentTarget.getAttribute('data-qi')]=ev.currentTarget.getAttribute('data-v');
+        saveState({glPicks:picks});
+        paint();
+      };
+      var ins=box.querySelectorAll('.gl-in');
+      for(var j=0;j<ins.length;j++)ins[j].onchange=function(ev){
+        picks[+ev.currentTarget.getAttribute('data-qi')]=ev.currentTarget.value;
+        saveState({glPicks:picks});
+      };
+    }
+    document.getElementById('gl-check').onclick=function(){
+      var ok=0;
+      quiz.forEach(function(q,qi){
+        var ans=String(q.answer||'').trim().toLowerCase();
+        var got=String(picks[qi]||'').trim().toLowerCase();
+        var hit=got&&(got===ans||ans.indexOf(got)>=0||got.indexOf(ans)>=0);
+        if(hit)ok++;
+        var fb=document.getElementById('gl-fb-'+qi);
+        if(fb)fb.innerHTML=hit?'✅ 正确':'❌ 参考：'+esc(q.answer)+(q.analysis?' · '+esc(q.analysis):'');
+      });
+      toast('答对 '+ok+' / '+quiz.length);
+    };
+    document.getElementById('gl-reset').onclick=function(){picks={};saveState({glPicks:{}});paint();};
+    paint();
+  }
+
+  function renderWritingPack(title, emoji, blocksHtml){
+    return '<h2>'+emoji+' '+esc(title)+'</h2>'+blocksHtml;
+  }
+  function wordCountTip(taId){
+    return '<div class="muted" id="'+taId+'-wc" style="margin-top:4px">词数：0</div>';
+  }
+  function bindWordCount(ta){
+    if(!ta)return;
+    var wc=document.getElementById(ta.id+'-wc');
+    function upd(){
+      var t=String(ta.value||'').trim();
+      var n=t?t.split(/\s+/).filter(Boolean).length:0;
+      if(wc)wc.textContent='词数：'+n+(n?' · 草稿已自动保存到本机':'');
+    }
+    ta.addEventListener('input',upd);upd();
+  }
+  function guideAndDraft(prefix, guideSteps, modelHtml, checklist){
+    var g=(guideSteps||[]).map(function(s,i){
+      return '<div class="card"><strong>Step '+(i+1)+' · '+esc(s.title||'')+'</strong><p>'+esc(s.teacherGuide||'')+'</p><p><em>任务：</em>'+esc(s.studentTask||'')+'</p><ul>'+list(s.scaffolds)+'</ul></div>';
+    }).join('');
+    return g+'<h3>我的练习草稿</h3><p class="muted">草稿保存在本机浏览器，下次打开同一链接可继续。</p><textarea id="'+prefix+'-draft" placeholder="在此作答…"></textarea>'+wordCountTip(prefix+'-draft')+
+      btnRow('<button class="btn btn-ghost" id="'+prefix+'-show">显示范文/参考</button><button class="btn btn-ghost" id="'+prefix+'-hide">隐藏参考</button>')+
+      '<div id="'+prefix+'-model" style="display:none" class="card">'+modelHtml+'</div>'+
+      (checklist&&checklist.length?'<h3>自评清单</h3><ul>'+list(checklist)+'</ul>':'');
+  }
+  function bindDraftToggle(prefix){
+    var show=document.getElementById(prefix+'-show');
+    var hide=document.getElementById(prefix+'-hide');
+    var m=document.getElementById(prefix+'-model');
+    var ta=document.getElementById(prefix+'-draft');
+    if(ta){
+      ta.value=state['draft_'+prefix]||'';
+      ta.oninput=function(){var p={};p['draft_'+prefix]=ta.value;saveState(p);};
+      bindWordCount(ta);
+    }
+    if(show)show.onclick=function(){m.style.display='block';};
+    if(hide)hide.onclick=function(){m.style.display='none';};
+  }
+
+  function renderContinuation(d){
+    var steps=(d.steps||[]).map(function(s,i){
+      return '<div class="card"><strong>'+esc(s.title)+'</strong><p>'+esc(s.teacherGuide)+'</p><p><em>'+esc(s.studentTask)+'</em></p><ul>'+list(s.scaffolds)+'</ul></div>';
+    }).join('');
+    return renderWritingPack(d.title||'读后续写','✍️',
+      '<div class="passage">'+esc(d.adaptedPassage||'')+'</div>'+
+      '<p><strong>段首1：</strong>'+esc(d.para1Opening||'')+'</p><p><strong>段首2：</strong>'+esc(d.para2Opening||'')+'</p>'+
+      steps+
+      '<h3>续写草稿</h3><p class="muted">草稿保存在本机浏览器，下次打开同一链接可继续。</p><textarea id="cw-draft" placeholder="Para1...\n\nPara2..."></textarea>'+wordCountTip('cw-draft')+
+      btnRow('<button class="btn btn-ghost" id="cw-show">显示范文</button>')+
+      '<div id="cw-model" style="display:none" class="card"><h3>范文</h3><p>'+esc(d.modelEssayPara1||'')+'</p><p>'+esc(d.modelEssayPara2||'')+'</p></div>'
+    );
+  }
+  function bindContinuation(){
+    var b=document.getElementById('cw-show');var m=document.getElementById('cw-model');
+    var ta=document.getElementById('cw-draft');
+    if(ta){ta.value=state.draft_cw||'';ta.oninput=function(){saveState({draft_cw:ta.value});};bindWordCount(ta);}
+    if(b)b.onclick=function(){m.style.display=m.style.display==='none'?'block':'none';};
+  }
+
+  function renderSentenceBuild(d){
+    return '<h2>🧱 积木拼搭</h2><p class="muted">'+esc(d.teacherGuide||'')+'</p><div id="sb-area"></div>'+
+      btnRow('<button class="btn btn-ghost" id="sb-prev">上一句</button><button class="btn btn-primary" id="sb-check">核对</button><button class="btn btn-ghost" id="sb-next">下一句</button><button class="btn btn-ghost" id="sb-reveal">看答案</button><button class="btn btn-ghost" id="sb-reshuffle">打乱重来</button>');
+  }
+  function bindSentenceBuild(){
+    var d=mods.sentenceBuild;if(!d)return;
+    var listS=d.sentences||[];
+    var idx=Math.min(state.sbIdx|0, Math.max(0,listS.length-1));
+    var order=[];
+    var doneMap=state.sbDone||{};
+    function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
+    function resetSentence(s){
+      if(!s)return;
+      s._slot=[];
+      (s.blocks||[]).forEach(function(b){b._used=false;});
+      order=[];
+    }
+    function paint(){
+      saveState({sbIdx:idx});
+      var s=listS[idx];if(!s){document.getElementById('sb-area').innerHTML='<p>暂无句子</p>';return;}
+      if(!order.length)order=shuffle((s.blocks||[]).map(function(b,i){return i;}));
+      var pool=order.map(function(bi){var b=s.blocks[bi];return '<span class="block'+(b.isChunk?' chunk':'')+(b._used?' used':'')+'" data-bi="'+bi+'">'+esc(b.text)+'</span>';}).join('');
+      var slot=(s._slot||[]).map(function(bi){var b=s.blocks[bi];return '<span class="block'+(b.isChunk?' chunk':'')+'" data-si="'+bi+'">'+esc(b.text)+'</span>';}).join('');
+      var doneN=0;for(var k in doneMap)if(doneMap[k])doneN++;
+      document.getElementById('sb-area').innerHTML='<div class="progress">第 '+(idx+1)+' / '+listS.length+' 句 · 已过 '+doneN+' 句 · '+esc(s.cnHint||'')+(doneMap[idx]?' · ✅':'')+'</div>'+
+        '<div class="slot-area" id="sb-slot">'+slot+'</div><div id="sb-pool">'+pool+'</div><div class="muted" id="sb-fb"></div>';
+      var poolEl=document.getElementById('sb-pool');
+      var blocks=poolEl.querySelectorAll('.block:not(.used)');
+      for(var i=0;i<blocks.length;i++)blocks[i].onclick=function(ev){
+        var bi=+ev.currentTarget.getAttribute('data-bi');
+        s._slot=s._slot||[];s._slot.push(bi);s.blocks[bi]._used=true;paint();
+      };
+      var slotBlocks=document.querySelectorAll('#sb-slot .block');
+      for(var j=0;j<slotBlocks.length;j++)slotBlocks[j].onclick=function(ev){
+        var bi=+ev.currentTarget.getAttribute('data-si');
+        s._slot=(s._slot||[]).filter(function(x){return x!==bi;});
+        s.blocks[bi]._used=false;paint();
+      };
+    }
+    document.getElementById('sb-prev').onclick=function(){idx=Math.max(0,idx-1);resetSentence(listS[idx]);paint();};
+    document.getElementById('sb-next').onclick=function(){idx=Math.min(listS.length-1,idx+1);resetSentence(listS[idx]);paint();};
+    document.getElementById('sb-check').onclick=function(){
+      var s=listS[idx];if(!s)return;
+      var got=(s._slot||[]).map(function(bi){return s.blocks[bi].text;}).join(' ').replace(/\s+/g,' ').trim();
+      var ans=String(s.correctSentence||'').replace(/\s+/g,' ').trim();
+      var ok=got.toLowerCase()===ans.toLowerCase();
+      document.getElementById('sb-fb').textContent=ok?'✅ 正确！':'❌ 再试试。参考：'+ans;
+      if(ok){doneMap[idx]=1;saveState({sbDone:doneMap});}
+    };
+    document.getElementById('sb-reveal').onclick=function(){
+      var s=listS[idx];if(!s)return;
+      document.getElementById('sb-fb').textContent='✅ '+s.correctSentence+(s.structureSample?' · 结构例：'+s.structureSample:'');
+    };
+    var reshuffle=document.getElementById('sb-reshuffle');
+    if(reshuffle)reshuffle.onclick=function(){resetSentence(listS[idx]);paint();toast('已打乱重来');};
+    paint();
+  }
+
+  function renderSummary(d){
+    return renderWritingPack(d.title||'概要写作','📝',
+      '<ul>'+list(d.taskRequirements)+'</ul><p><strong>主旨：</strong>'+esc(d.mainIdea||'')+'</p><ul>'+list(d.keyPoints)+'</ul>'+
+      guideAndDraft('sum',d.guideSteps,'<p>'+esc(d.modelSummary||'')+'</p><p class="muted">词数约 '+esc(d.modelWordCount||'')+'</p>',d.checklist)
+    );
+  }
+  function renderPara(d){
+    var tasks=[].concat(d.compressTasks||[],d.expandTasks||[]);
+    var html='<h2>📐 段落缩写 / 扩写</h2><div id="pr-tabs" class="row"></div><div id="pr-body"></div>';
+    return html;
+  }
+  function bindPara(){
+    var d=mods.paraRewrite;if(!d)return;
+    var tasks=[].concat(d.compressTasks||[],d.expandTasks||[]);
+    var cur=state.prCur|0;
+    function paint(){
+      document.getElementById('pr-tabs').innerHTML=tasks.map(function(t,i){
+        return '<button class="btn '+(i===cur?'btn-primary':'btn-ghost')+'" data-i="'+i+'">'+(t.mode==='expand'?'扩写':'缩写')+' '+(i+1)+'</button>';
+      }).join('');
+      var t=tasks[cur];if(!t){document.getElementById('pr-body').innerHTML='';return;}
+      var prefix='pr'+cur;
+      document.getElementById('pr-body').innerHTML='<div class="passage">'+esc(t.sourceParagraph||'')+'</div><p class="muted">'+esc(t.targetWordHint||'')+'</p>'+
+        guideAndDraft(prefix,t.guideSteps,'<p>'+esc(t.modelAnswer||'')+'</p>',t.checklist);
+      bindDraftToggle(prefix);
+      var tabs=document.querySelectorAll('#pr-tabs button');
+      for(var i=0;i<tabs.length;i++)tabs[i].onclick=function(ev){
+        cur=+ev.currentTarget.getAttribute('data-i');
+        saveState({prCur:cur});
+        paint();
+      };
+    }
+    paint();
+  }
+
+  function renderPolish(d){
+    var items=(d.items||[]).map(function(it,i){
+      return '<div class="card"><div class="q">'+(i+1)+'. '+esc(it.originalSentence||'')+'</div><p class="muted">'+esc(it.taskHint||'')+' · '+esc(it.logicHint||'')+'</p>'+
+        '<p><strong>'+esc(it.versionALabel||'A')+'：</strong>'+esc(it.versionA||'')+'</p>'+
+        '<p><strong>'+esc(it.versionBLabel||'B')+'：</strong>'+esc(it.versionB||'')+'</p>'+
+        '<textarea id="pol-item-'+i+'" placeholder="我的改写…"></textarea>'+wordCountTip('pol-item-'+i)+'</div>';
+    }).join('');
+    return renderWritingPack(d.title||'句子润色','✨','<ul>'+list(d.taskRequirements)+'</ul>'+guideAndDraft('pol',d.guideSteps,'',d.checklist)+items);
+  }
+  function bindPolishItems(){
+    bindDraftToggle('pol');
+    var items=(mods.sentencePolish&&mods.sentencePolish.items)||[];
+    var drafts=state.polItems||{};
+    for(var i=0;i<items.length;i++)(function(idx){
+      var ta=document.getElementById('pol-item-'+idx);
+      if(!ta)return;
+      ta.value=drafts[idx]||'';
+      ta.oninput=function(){drafts[idx]=ta.value;saveState({polItems:drafts});};
+      bindWordCount(ta);
+    })(i);
+  }
+
+  function renderMaterial(d){
+    return renderWritingPack(d.title||'写作素材','💎',
+      '<p><strong>主题：</strong>'+esc(d.coreTheme||'')+' — '+esc(d.coreThemeExplain||'')+'</p>'+
+      '<h3>观点</h3><ul>'+list(d.thesisSentences)+'</ul>'+
+      '<h3>论据</h3><ul>'+list(d.evidenceSentences)+'</ul>'+
+      '<h3>迁移句</h3><ul>'+list(d.transferSentences)+'</ul>'+
+      '<h3>适用话题</h3><ul>'+list(d.suitableTopics)+'</ul>'+
+      '<h3>使用提示</h3><ul>'+list(d.usageTips)+'</ul>'+
+      guideAndDraft('mat',[{title:'素材迁移练笔',teacherGuide:'选用上面至少 2 条素材，写一段 80～120 词的短文。',studentTask:'自选话题迁移写法',scaffolds:d.usageTips||[]}],'',['是否自然嵌入观点句','是否用到论据或迁移句','词数大约 80～120'])
+    );
+  }
+
+  function renderPractical(d){
+    return '<h2>💌 应用文写作</h2><p class="muted">主题：'+esc(d.theme||'')+'</p>'+
+      '<div class="row"><button class="btn btn-primary" id="pw-zk">中考版</button><button class="btn btn-ghost" id="pw-gk">高考版</button></div><div id="pw-body"></div>';
+  }
+  function bindPractical(){
+    var d=mods.practicalWriting;if(!d)return;
+    var level=state.pwLevel||'zhongkao';
+    function paint(lv){
+      level=lv||'zhongkao';
+      saveState({pwLevel:level});
+      var pack=level==='gaokao'?d.gaokao:d.zhongkao;if(!pack){document.getElementById('pw-body').innerHTML='<p>无此难度数据包</p>';return;}
+      document.getElementById('pw-zk').className='btn '+(level==='zhongkao'?'btn-primary':'btn-ghost');
+      document.getElementById('pw-gk').className='btn '+(level==='gaokao'?'btn-primary':'btn-ghost');
+      var prefix=level==='gaokao'?'pwgk':'pwzk';
+      document.getElementById('pw-body').innerHTML='<div class="card"><strong>'+esc(pack.genreLabel||pack.genre)+'</strong><p>'+esc(pack.background||'')+'</p><p>'+esc(pack.taskInstruction||'')+'</p><ul>'+list(pack.keyPoints)+'</ul><p class="muted">'+esc(pack.wordCountHint||'')+'</p></div>'+
+        guideAndDraft(prefix,pack.guideSteps,'<pre style="white-space:pre-wrap">'+esc(pack.modelEssay||'')+'</pre><h3>句型</h3><ul>'+list(pack.keyPatterns)+'</ul>',pack.checklist);
+      bindDraftToggle(prefix);
+    }
+    document.getElementById('pw-zk').onclick=function(){paint('zhongkao');};
+    document.getElementById('pw-gk').onclick=function(){paint('gaokao');};
+    paint(level);
+  }
+
+  function renderListening(d){
+    return '<h2>🎧 听力肌肉训练</h2><p class="muted">'+esc(d.theme||'')+' · 使用本机 TTS 离线朗读</p>'+
+      '<div class="row"><button class="btn btn-primary" id="lm-play">朗读本句</button><button class="btn btn-ghost" id="lm-prev">上一句</button><button class="btn btn-ghost" id="lm-next">下一句</button><button class="btn btn-ghost" id="lm-cn">显示/隐藏中文</button></div>'+
+      '<div class="progress" id="lm-prog"></div><div class="passage" id="lm-en"></div><div class="passage cn" id="lm-cn-box" style="display:none"></div>'+
+      '<h3>理解题</h3><div id="lm-qs"></div>';
+  }
+  function bindListening(){
+    var d=mods.listeningMuscle;if(!d)return;
+    var sents=d.sentences||[];
+    var i=state.lmIdx|0;var showCn=!!state.lmShowCn;
+    var answers=state.lmAnswers||{};
+    function paint(){
+      var s=sents[i];
+      document.getElementById('lm-prog').textContent=(i+1)+' / '+sents.length;
+      document.getElementById('lm-en').textContent=s?s.en:'';
+      document.getElementById('lm-cn-box').textContent=s?s.cn:'';
+      document.getElementById('lm-cn-box').style.display=showCn?'block':'none';
+      saveState({lmIdx:i,lmShowCn:showCn});
+    }
+    document.getElementById('lm-play').onclick=function(){var s=sents[i];if(s)speak(s.en,'en-US');};
+    document.getElementById('lm-prev').onclick=function(){i=Math.max(0,i-1);paint();};
+    document.getElementById('lm-next').onclick=function(){i=Math.min(sents.length-1,i+1);paint();};
+    document.getElementById('lm-cn').onclick=function(){showCn=!showCn;paint();};
+    document.getElementById('lm-qs').innerHTML=(d.comprehensionQs||[]).map(function(q,qi){
+      return '<div class="card"><div class="q">'+esc(q.q)+'</div><textarea id="lm-a-'+qi+'" placeholder="作答…"></textarea><button class="btn btn-ghost lm-ans" data-a="'+esc(q.a)+'">看参考答案</button><div class="muted lm-a" style="display:none"></div></div>';
+    }).join('');
+    var abs=document.querySelectorAll('.lm-ans');
+    for(var k=0;k<abs.length;k++)abs[k].onclick=function(ev){
+      var a=ev.currentTarget.nextElementSibling;a.style.display='block';a.textContent=ev.currentTarget.getAttribute('data-a');
+    };
+    var qs=d.comprehensionQs||[];
+    for(var qi=0;qi<qs.length;qi++)(function(idx){
+      var ta=document.getElementById('lm-a-'+idx);
+      if(!ta)return;
+      ta.value=answers[idx]||'';
+      ta.oninput=function(){answers[idx]=ta.value;saveState({lmAnswers:answers});};
+    })(qi);
+    paint();
+  }
+
+  var renderers={
+    passage:renderPassage,
+    mindMap:renderMindMap,
+    cloze:renderCloze,
+    grammarLogic:renderGrammar,
+    continuationWriting:renderContinuation,
+    sentenceBuild:renderSentenceBuild,
+    summaryWriting:renderSummary,
+    paraRewrite:renderPara,
+    sentencePolish:renderPolish,
+    writingMaterial:renderMaterial,
+    practicalWriting:renderPractical,
+    listeningMuscle:renderListening
+  };
+  var binders={
+    passage:bindPassage,
+    mindMap:bindMindMap,
+    cloze:bindCloze,
+    grammarLogic:bindGrammar,
+    continuationWriting:bindContinuation,
+    sentenceBuild:bindSentenceBuild,
+    summaryWriting:function(){bindDraftToggle('sum');},
+    paraRewrite:bindPara,
+    sentencePolish:bindPolishItems,
+    writingMaterial:function(){bindDraftToggle('mat');},
+    practicalWriting:bindPractical,
+    listeningMuscle:bindListening
+  };
+
+  var first=null;
+  order.forEach(function(pair){
+    var id=pair[0],label=pair[1];
+    if(!mods[id])return;
+    if(!first)first=id;
+    var b=document.createElement('button');
+    b.textContent=label;b.dataset.id=id;
+    b.onclick=function(){showPanel(id);};
+    nav.appendChild(b);
+    var panel=document.createElement('section');
+    panel.className='panel';panel.id='panel-'+id;
+    try{panel.innerHTML=renderers[id](mods[id]);}catch(e){panel.innerHTML='<p>模块加载失败：'+esc(e.message)+'</p>';}
+    main.appendChild(panel);
+  });
+  var hashId=(location.hash||'').replace(/^#/,'');
+  if(hashId&&mods[hashId])first=hashId;
+  if(first){
+    showPanel(first);
+    order.forEach(function(pair){
+      if(mods[pair[0]]&&binders[pair[0]]){try{binders[pair[0]]();}catch(e){console.warn(e);}}
+    });
+  }else{
+    main.innerHTML='<p class="muted">未包含任何训练模块。</p>';
+  }
+  document.getElementById('meta-sub').textContent=
+    (meta.articleTitle||'课后训练')+' · 可反复练习 · 无需联网 · 草稿保存在本机';
+  if(hasDraft)setTimeout(function(){toast('已恢复本机上次练习草稿');},400);
+  } // end runApp
+
+  var gateList = P.accessGate || [];
+  var needCode = gateList.some(function(g){ return String(g.code||'').length>0; });
+  var sessKey = 'xxdd_gate_'+(P.meta&&P.meta.packId||'pack');
+  try{
+    var okName = sessionStorage.getItem(sessKey);
+    if(okName){ runApp(); return; }
+  }catch(e){}
+  if(!gateList.length){ runApp(); return; }
+
+  var gate = document.createElement('div');
+  gate.className='gate';
+  gate.innerHTML=
+    '<div class="gate-card">'+
+      '<h2>👨‍👩‍👧 家长 / 学生登录</h2>'+
+      '<p class="hint">请输入孩子姓名'+(needCode?' + 老师发放的访问码':'')+'后进入课后练习。</p>'+
+      '<label>孩子姓名</label><input id="gate-name" autocomplete="name" placeholder="与老师花名册一致"/>'+
+      (needCode?'<label>访问码</label><input id="gate-code" inputmode="numeric" autocomplete="one-time-code" placeholder="4 位数字"/>':'')+
+      '<div class="err" id="gate-err"></div>'+
+      '<button type="button" class="go" id="gate-go">进入练习</button>'+
+    '</div>';
+  document.body.appendChild(gate);
+  function tryEnter(){
+    var nameEl=document.getElementById('gate-name');
+    var codeEl=document.getElementById('gate-code');
+    var errEl=document.getElementById('gate-err');
+    var name=String(nameEl&&nameEl.value||'').trim();
+    var code=String(codeEl&&codeEl.value||'').replace(/\D/g,'');
+    if(!name){ if(errEl)errEl.textContent='请填写孩子姓名'; return; }
+    var hit=null;
+    for(var i=0;i<gateList.length;i++){
+      var g=gateList[i];
+      if(String(g.name||'').trim()===name){ hit=g; break; }
+    }
+    if(!hit){ if(errEl)errEl.textContent='姓名不在本班名单，请核对后重试'; return; }
+    if(needCode){
+      if(!code){ if(errEl)errEl.textContent='请填写访问码'; return; }
+      if(String(hit.code||'')!==code){ if(errEl)errEl.textContent='访问码不正确'; return; }
+    }
+    try{ sessionStorage.setItem(sessKey, name); }catch(e){}
+    gate.remove();
+    runApp();
+  }
+  var goBtn=document.getElementById('gate-go');
+  if(goBtn)goBtn.onclick=tryEnter;
+  ['gate-name','gate-code'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el)return;
+    el.addEventListener('keydown',function(ev){ if(ev.key==='Enter')tryEnter(); });
+  });
+})();</script>
+</body>
+</html>
